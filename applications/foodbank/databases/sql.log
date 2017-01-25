@@ -1,4 +1,4 @@
-timestamp: 2016-12-25T14:36:02.572439
+timestamp: 2017-01-20T19:06:45.702848
 CREATE TABLE auth_user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name CHAR(128),
@@ -10,21 +10,21 @@ CREATE TABLE auth_user(
     registration_id CHAR(512)
 );
 success!
-timestamp: 2016-12-25T14:36:02.739635
+timestamp: 2017-01-20T19:06:45.814631
 CREATE TABLE auth_group(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role CHAR(512),
     description TEXT
 );
 success!
-timestamp: 2016-12-25T14:36:02.840008
+timestamp: 2017-01-20T19:06:45.892844
 CREATE TABLE auth_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2016-12-25T14:36:02.952696
+timestamp: 2017-01-20T19:06:45.993190
 CREATE TABLE auth_permission(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
@@ -33,7 +33,7 @@ CREATE TABLE auth_permission(
     record_id INTEGER
 );
 success!
-timestamp: 2016-12-25T14:36:03.063691
+timestamp: 2017-01-20T19:06:46.325794
 CREATE TABLE auth_event(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     time_stamp TIMESTAMP,
@@ -43,7 +43,7 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
-timestamp: 2016-12-25T14:36:03.220138
+timestamp: 2017-01-20T19:06:46.448289
 CREATE TABLE auth_cas(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -53,24 +53,21 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
-timestamp: 2016-12-25T14:36:03.353861
-CREATE TABLE retailer(
+timestamp: 2017-01-20T19:06:46.551144
+CREATE TABLE category(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name CHAR(512),
-    join_date DATE,
-    address CHAR(512)
+    created DATE
 );
 success!
-timestamp: 2016-12-25T14:36:36.912109
-CREATE TABLE arrival(
+timestamp: 2017-01-20T19:06:46.650024
+CREATE TABLE unit(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name CHAR(512),
-    date DATE,
-    from_retailer INTEGER REFERENCES retailer (id) ON DELETE CASCADE  ,
-    amount DOUBLE
+    created DATE
 );
 success!
-timestamp: 2016-12-25T15:40:09.745399
+timestamp: 2017-01-20T19:06:46.749990
 CREATE TABLE volunteer(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name CHAR(512),
@@ -78,169 +75,28 @@ CREATE TABLE volunteer(
     address CHAR(512)
 );
 success!
-timestamp: 2016-12-25T15:40:09.877569
-ALTER TABLE arrival ADD from_volunteer INTEGER REFERENCES volunteer (id) ON DELETE CASCADE  ;
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-timestamp: 2016-12-25T15:46:58.880326
-CREATE TABLE category(
+timestamp: 2017-01-20T19:06:46.850130
+CREATE TABLE retailer(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name CHAR(512),
-    created DATE
+    join_date DATE,
+    address CHAR(512)
 );
 success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-timestamp: 2016-12-25T15:51:38.356422
-CREATE TABLE arrival_category(
+timestamp: 2017-01-20T19:06:46.950409
+CREATE TABLE entrance(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    amount DOUBLE,
-    from_category INTEGER REFERENCES category (id) ON DELETE CASCADE  ,
-    from_arrival INTEGER REFERENCES arrival (id) ON DELETE CASCADE  
+    date DATE,
+    from_retailer INTEGER REFERENCES retailer (id) ON DELETE CASCADE  ,
+    from_volunteer INTEGER REFERENCES volunteer (id) ON DELETE CASCADE  
 );
 success!
-success!
-success!
-success!
-timestamp: 2016-12-25T22:52:30.113077
-CREATE TABLE catamount(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    amount DOUBLE,
-    from_category INTEGER REFERENCES category (id) ON DELETE CASCADE  ,
-    from_arrival INTEGER REFERENCES arrival (id) ON DELETE CASCADE  
-);
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-timestamp: 2016-12-26T02:54:27.235812
-ALTER TABLE catamount ADD quant DOUBLE;
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-timestamp: 2016-12-26T03:17:24.698761
+timestamp: 2017-01-20T19:06:47.050579
 CREATE TABLE product(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     amount DOUBLE,
+    unit INTEGER REFERENCES unit (id) ON DELETE CASCADE  ,
     from_category INTEGER REFERENCES category (id) ON DELETE CASCADE  ,
-    from_arrival INTEGER REFERENCES arrival (id) ON DELETE CASCADE  
+    from_entrance INTEGER REFERENCES entrance (id) ON DELETE CASCADE  
 );
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
 success!

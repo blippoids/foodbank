@@ -1,0 +1,13 @@
+{{extend  'layout.html'}}
+{{if 'message' in globals():}}
+<h3>{{=message}}</h3>
+{{pass}}
+<h2>{{=T('Entrance')}}</h2>
+<h3>{{=A(T('Main'), _href=URL('index'))}} {{=A(T('Retailer'), _href=URL('retailer'))}} {{=A(T('Entrance'), _href=URL('entrance'))}} {{=A(T('Volunteer'), _href=URL('volunteer'))}} {{=A(T('Category'), _href=URL('category'))}}</h3>
+
+
+{{=entrance}}
+{{if ('view' in request.args):}}
+  {{=productos}}
+  {{=form}}
+{{pass}}

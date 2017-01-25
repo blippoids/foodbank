@@ -1,0 +1,6 @@
+{{extend 'layout.html'}}
+
+<h2>{{=entrance.from_retailer.name}}-{{=entrance.from_volunteer.name}} {{=entrance.date}}</h2>
+
+{{for product in products:}}
+  <h3>{{=product}}</h3>

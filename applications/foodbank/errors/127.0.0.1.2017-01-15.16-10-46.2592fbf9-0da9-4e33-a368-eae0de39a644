@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.TypeError'> expected string or buffer"
+p3
+sS'layer'
+p4
+S'/home/yanesl/websites/foodbank/applications/foodbank/controllers/default.py'
+p5
+sS'code'
+p6
+S'# -*- coding: utf-8 -*-\n# this file is released under public domain and you can use without limitations\n\n# -------------------------------------------------------------------------\n# This is a sample controller\n# - index is the default action of any application\n# - user is required for authentication and authorization\n# - download is for downloading files uploaded in the db (does streaming)\n# -------------------------------------------------------------------------\n\nimport json\n\ndef user():\n    """\n    exposes:\n    http://..../[app]/default/user/login\n    http://..../[app]/default/user/logout\n    http://..../[app]/default/user/register\n    http://..../[app]/default/user/profile\n    http://..../[app]/default/user/retrieve_password\n    http://..../[app]/default/user/change_password\n    http://..../[app]/default/user/bulk_register\n    use @auth.requires_login()\n        @auth.requires_membership(\'group name\')\n        @auth.requires_permission(\'read\',\'table name\',record_id)\n    to decorate functions that need access control\n    also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users\n    """\n    return dict(form=auth())\n\n\n@cache.action()\ndef download():\n    """\n    allows downloading of uploaded files\n    http://..../[app]/default/download/[filename]\n    """\n    return response.download(request, db)\n\n\ndef call():\n    """\n    exposes services. for example:\n    http://..../[app]/default/call/jsonrpc\n    decorate with @services.jsonrpc the functions to expose\n    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv\n    """\n    return service()\n\n\ndef index():\n    """\n    example action using the internationalization operator T and flash\n    rendered by views/default/index.html or views/generic.html\n\n    if you need a simple wiki simply replace the two lines below with:\n    return auth.wiki()\n    """\n    response.flash = T("Hello World")\n    return dict(grid=SQLFORM.smartgrid(db.entrance, linked_tables=[\'product\'], user_signature=False))\n\ndef category():\n    return dict(grid=SQLFORM.grid(db.category, user_signature=False))\n\ndef unit():\n    return dict(grid=SQLFORM.grid(db.unit, user_signature=False))\n\n\ndef retailer():\n    return dict(grid=SQLFORM.grid(db.retailer, user_signature=False))\n\ndef entrance():\n    return dict(grid=SQLFORM.smartgrid(db.entrance, linked_tables=[\'product\'], user_signature=False))\n\ndef volunteer():\n    return dict(grid=SQLFORM.grid(db.volunteer, user_signature=False))\n\ndef product():\n    return dict(grid=SQLFORM.smartgrid(db.product, linked_tables=[\'category\'], user_signature=False))\n\ndef get_items():\n    return json.loads(request.vars.array)\n    #return db(db.product.from_entrance==int(request.vars.array.from_entrance).select())\n    #return db(db.product.from_arrival==int(request.vars.from_arrival)).select().json()\n\ndef add_items():\n    return dict(form=SQLFORM(db.product), arrival_id=request.vars.from_arrival)\n\nresponse._vars=response._caller(get_items)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/yanesl/websites/foodbank/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/yanesl/websites/foodbank/applications/foodbank/controllers/default.py", line 89, in <module>\n  File "/home/yanesl/websites/foodbank/gluon/globals.py", line 417, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/yanesl/websites/foodbank/applications/foodbank/controllers/default.py", line 82, in get_items\n    return json.loads(request.vars.array)\n  File "/usr/lib64/python2.7/json/__init__.py", line 339, in loads\n    return _default_decoder.decode(s)\n  File "/usr/lib64/python2.7/json/decoder.py", line 364, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\nTypeError: expected string or buffer\n'
+p11
+s.

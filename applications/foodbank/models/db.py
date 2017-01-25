@@ -81,16 +81,17 @@ response.form_label_separator = myconf.get('forms.separator') or ''
 # -------------------------------------------------------------------------
 
 from gluon.tools import Auth, Service, PluginManager
+db = DAL("sqlite://storage.sqlite")
 
 # host names must be a list of allowed host names (glob syntax allowed)
-auth = Auth(db, host_names=myconf.get('host.names'))
+auth = Auth(db)
+auth.define_tables(username=False,signature=False)
 service = Service()
 plugins = PluginManager()
 
 # -------------------------------------------------------------------------
 # create all tables needed by auth if not custom tables
 # -------------------------------------------------------------------------
-auth.define_tables(username=False, signature=False)
 
 # -------------------------------------------------------------------------
 # configure email
@@ -106,7 +107,7 @@ mail.settings.ssl = myconf.get('smtp.ssl') or False
 # configure auth policy
 # -------------------------------------------------------------------------
 auth.settings.registration_requires_verification = False
-auth.settings.registration_requires_approval = False
+auth.settings.registration_requires_approval = True
 auth.settings.reset_password_requires_verification = True
 
 # -------------------------------------------------------------------------
@@ -139,28 +140,45 @@ db = DAL("sqlite://storage.sqlite")
 db.define_table("category",
                 Field("name", "string"),
                 Field("created", "date"),
-                format='%(name)s')
+                format='%(name)s',
+                )
+
+db.define_table("unit",
+                Field("name", "string"),
+                Field("created", "date"),
+                format='%(name)s',
+                )
+
 
 db.define_table("volunteer",
                 Field("name", "string"),
                 Field("joined", "date"),
                 Field("address", "string"),
-                format='%(name)s')
+                format='%(name)s',
+                )
+
 
 db.define_table("retailer",
                 Field("name", "string"),
                 Field("join_date", "date"),
                 Field("address", "string"),
-                format="%(name)s")
+                format="%(name)s",
+                )
 
-db.define_table("arrival",
+
+db.define_table("entrance",
                 Field("date", "date"),
                 Field("from_retailer", 'reference retailer'),
                 Field("from_volunteer", 'reference volunteer'),
-                format=lambda r: '%s: %s-%s' % (r.date, r.from_retailer.name, r.from_volunteer.name))
+                format=lambda r: '%s: %s-%s' % (r.date, r.from_retailer.name, r.from_volunteer.name),
+                )
+
 
 db.define_table("product",
                 Field("amount", "double"),
+                Field('unit', 'reference unit', required=False),
                 Field('from_category', 'reference category', required=False),
-                Field('from_arrival', 'reference arrival', required=False),
-                format="%(from_category)s-%(from_arrival)s")
+                Field('from_entrance', 'reference entrance', required=False),
+                format="%(from_category)s-%(from_entrance)s",
+                )
+auth.enable_record_versioning(db)
