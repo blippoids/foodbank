@@ -57,7 +57,10 @@ response.form_label_separator = myconf.get('forms.separator') or ''
 # -------------------------------------------------------------------------
 
 from gluon.tools import Auth, Service, PluginManager
-db = DAL("sqlite://storage.sqlite")
+
+try: db = DAL(os.environ.get('DATABASE_URL'))
+except: db = DAL('sqlite://storage.sqlite')
+
 
 # host names must be a list of allowed host names (glob syntax allowed)
 auth = Auth(db)
