@@ -1,102 +1,147 @@
-timestamp: 2017-01-20T19:06:45.702848
-CREATE TABLE auth_user(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    first_name CHAR(128),
-    last_name CHAR(128),
-    email CHAR(512),
-    password CHAR(512),
-    registration_key CHAR(512),
-    reset_password_key CHAR(512),
-    registration_id CHAR(512)
+timestamp: 2017-01-29T17:06:42.897044
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512)
 );
 success!
-timestamp: 2017-01-20T19:06:45.814631
-CREATE TABLE auth_group(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    role CHAR(512),
-    description TEXT
+timestamp: 2017-01-29T17:06:42.911486
+CREATE TABLE "auth_group"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "role" CHAR(512),
+    "description" TEXT
 );
 success!
-timestamp: 2017-01-20T19:06:45.892844
-CREATE TABLE auth_membership(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+timestamp: 2017-01-29T17:06:43.049721
+CREATE TABLE "auth_membership"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
 );
 success!
-timestamp: 2017-01-20T19:06:45.993190
-CREATE TABLE auth_permission(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
-    name CHAR(512),
-    table_name CHAR(512),
-    record_id INTEGER
+timestamp: 2017-01-29T17:06:43.059178
+CREATE TABLE "auth_permission"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "table_name" CHAR(512),
+    "record_id" INTEGER
 );
 success!
-timestamp: 2017-01-20T19:06:46.325794
-CREATE TABLE auth_event(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    time_stamp TIMESTAMP,
-    client_ip CHAR(512),
-    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    origin CHAR(512),
-    description TEXT
+timestamp: 2017-01-29T17:06:43.071094
+CREATE TABLE "auth_event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "time_stamp" TIMESTAMP,
+    "client_ip" CHAR(512),
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "origin" CHAR(512),
+    "description" TEXT
 );
 success!
-timestamp: 2017-01-20T19:06:46.448289
-CREATE TABLE auth_cas(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    created_on TIMESTAMP,
-    service CHAR(512),
-    ticket CHAR(512),
-    renew CHAR(1)
+timestamp: 2017-01-29T17:06:43.084390
+CREATE TABLE "auth_cas"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "service" CHAR(512),
+    "ticket" CHAR(512),
+    "renew" CHAR(1)
 );
 success!
-timestamp: 2017-01-20T19:06:46.551144
-CREATE TABLE category(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    created DATE
+timestamp: 2017-01-29T17:06:43.096502
+CREATE TABLE "category"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512),
+    "created" DATE
 );
 success!
-timestamp: 2017-01-20T19:06:46.650024
-CREATE TABLE unit(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    created DATE
+timestamp: 2017-01-29T17:06:43.105138
+CREATE TABLE "unit"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512),
+    "created" DATE
 );
 success!
-timestamp: 2017-01-20T19:06:46.749990
-CREATE TABLE volunteer(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    joined DATE,
-    address CHAR(512)
+timestamp: 2017-01-29T17:06:43.117460
+CREATE TABLE "location"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "town" CHAR(512),
+    "city" CHAR(512),
+    "countrycode" CHAR(512),
+    "country" CHAR(512),
+    "longitude" DOUBLE,
+    "latitude" DOUBLE,
+    "street" CHAR(512),
+    "post_code" CHAR(512),
+    "post_code_prefix" CHAR(512)
 );
 success!
-timestamp: 2017-01-20T19:06:46.850130
-CREATE TABLE retailer(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    join_date DATE,
-    address CHAR(512)
+timestamp: 2017-01-29T17:06:43.135285
+CREATE TABLE "volunteer"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "volunteer_id" CHAR(512),
+    "first_name" CHAR(512),
+    "last_name" CHAR(512),
+    "joined" DATE,
+    "address" CHAR(512),
+    "roles" CHAR(512),
+    "thumbnail" TEXT,
+    "public_location" INTEGER REFERENCES "location" ("id") ON DELETE CASCADE  ,
+    "biography" TEXT
 );
 success!
-timestamp: 2017-01-20T19:06:46.950409
-CREATE TABLE entrance(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    date DATE,
-    from_retailer INTEGER REFERENCES retailer (id) ON DELETE CASCADE  ,
-    from_volunteer INTEGER REFERENCES volunteer (id) ON DELETE CASCADE  
+timestamp: 2017-01-29T17:06:43.150744
+CREATE TABLE "retailer"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512),
+    "join_date" DATE,
+    "address" CHAR(512)
 );
 success!
-timestamp: 2017-01-20T19:06:47.050579
-CREATE TABLE product(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    amount DOUBLE,
-    unit INTEGER REFERENCES unit (id) ON DELETE CASCADE  ,
-    from_category INTEGER REFERENCES category (id) ON DELETE CASCADE  ,
-    from_entrance INTEGER REFERENCES entrance (id) ON DELETE CASCADE  
+timestamp: 2017-01-29T17:06:43.161680
+CREATE TABLE "entrance"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "date" DATE,
+    "from_retailer" INTEGER REFERENCES "retailer" ("id") ON DELETE CASCADE  ,
+    "from_volunteer" INTEGER REFERENCES "volunteer" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2017-01-29T17:06:43.173067
+CREATE TABLE "product"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "amount" DOUBLE,
+    "unit" INTEGER REFERENCES "unit" ("id") ON DELETE CASCADE  ,
+    "from_category" INTEGER REFERENCES "category" ("id") ON DELETE CASCADE  ,
+    "from_entrance" INTEGER REFERENCES "entrance" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2017-01-29T17:06:43.183227
+CREATE TABLE "project"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "project_id" TEXT
+);
+success!
+timestamp: 2017-01-29T17:06:43.193598
+CREATE TABLE "event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "event_id" TEXT,
+    "name" TEXT,
+    "description" TEXT,
+    "organiser_id" TEXT,
+    "end_date_time" TEXT,
+    "status" INTEGER,
+    "location_id" INTEGER REFERENCES "location" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2017-01-29T17:06:43.207612
+CREATE TABLE "event_volunteer"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "event_id" INTEGER REFERENCES "event" ("id") ON DELETE CASCADE  ,
+    "volunteer_id" INTEGER REFERENCES "volunteer" ("id") ON DELETE CASCADE  
 );
 success!

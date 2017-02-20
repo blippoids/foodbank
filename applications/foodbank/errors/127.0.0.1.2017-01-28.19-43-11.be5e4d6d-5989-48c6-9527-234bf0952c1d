@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.NameError'> global name 'get_profile' is not defined"
+p3
+sS'layer'
+p4
+S'/Users/ggarcia/Documents/foodbank/applications/foodbank/controllers/api_info.py'
+p5
+sS'code'
+p6
+S'__author__ = \'ggarcia\'\n\nimport requests\n\nclass ngclass:\n    def __init__ (self):\n        self.base_url="https://www.neighbourly.com/api"\n        self.project_id = "5734bf1cb9918e1880f27a6e"\n\n    def get_page(self, url):\n        """ Get a page and return a json object asociated"""\n        url = "%s%s" %(self.base_url, url)\n        print url\n        r=requests.get(url)\n        if r.status_code == 200:\n            return r.json()\n        return []\n\n    def get_project_info(self):\n        """ Return a json for the info project """\n        url="/projects/%s" %(self.project_id,)\n        return self.get_page(url)\n\n    def get_all_events(self):\n        """ Get all the events information """\n        url = "/projectEvents/%s/all" %(self.project_id, )\n        return self.get_page(url)\n\n    def get_event_voluteers(self, event_id):\n        """ Get the voluteers associated with an event """\n        url="/projectEventVolunteers/%s/all/bystatus?projectEventId=%s&targetProjectId=&status=1" %(event_id, event_id)\n        return self.get_page(url)\n\n    def get_profile(self, user_id):\n        """ """\n        url="/profiles/%s" %(user_id, )\n        return self.get_page(url)\n\n    def get_volunteer_id(self, volunteer_object):\n      ## check if exists\n      if \'id\' not in volunteer_object.keys():\n        raise "Not an volunteer object"\n\n      volunteer_id=db(db.volunteer.event_id == volunteer_object[\'id\']).select(db.volunteer_object.id).first()\n      if volunteer_id is None:\n        volunteer_id=db.event.insert(volunteer_id=volunteer_object[\'id\'], first_name=volunteer_object[\'first_name\'], last_name=volunteer_object[\'last_name\'])\n\n      return volunteer_id\n\n    def get_event_id(self, event_object):\n      ## check if exists\n      if \'id\' not in event_object.keys():\n        raise "Not an event object"\n\n      event_id=db(db.event.event_id == event_object[\'id\']).select(db.event.id).first()\n      if event_id is None:\n        organiser_id = self.get_volunteer_id(get_profile(event_object[\'organiserId\']))\n        event_id=db.event.insert(event_id=event_object[\'id\'], name=event_object[\'name\'], status=event_object[\'status\'], organiser_id=organiser_id)\n\n      return event_id\n\n    def check_events(self):\n      ## get all events\n      nbg = ngclass()\n      events = nbg.get_all_events()\n      for event in events[:1]:\n        event_id = nbg.get_event_id(event)\n        print "%s, %s, %s" %(event_id, event[\'status\'], "hi", "2")\n      ## check the status of the events\n      ## for the open events check the voluteers\n      return None\n\ndef api_test():\n  nbg = ngclass()\n  events = nbg.get_all_events()\n  for event in events[:1]:\n    print event[\'name\'], event[\'id\'], event[\'status\'], event[\'endDateTime\']\n    print nbg.get_event_id(event)\n  #\n  # for user in nbg.get_event_voluteers("585ea7adc7ac880cdcf3817b"):\n  #   print user\n\n\n\n  return dict()\nresponse._vars=response._caller(api_test)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/Users/ggarcia/Documents/foodbank/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/Users/ggarcia/Documents/foodbank/applications/foodbank/controllers/api_info.py", line 86, in <module>\n  File "/Users/ggarcia/Documents/foodbank/gluon/globals.py", line 417, in <lambda>\n    self._caller = lambda f: f()\n  File "/Users/ggarcia/Documents/foodbank/applications/foodbank/controllers/api_info.py", line 78, in api_test\n    print nbg.get_event_id(event)\n  File "/Users/ggarcia/Documents/foodbank/applications/foodbank/controllers/api_info.py", line 57, in get_event_id\n    organiser_id = self.get_volunteer_id(get_profile(event_object[\'organiserId\']))\nNameError: global name \'get_profile\' is not defined\n'
+p11
+s.

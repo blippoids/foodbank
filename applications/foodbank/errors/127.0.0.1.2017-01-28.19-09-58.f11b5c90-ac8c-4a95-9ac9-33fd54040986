@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.AttributeError'> 'DAL' object has no attribute 'voluteers'"
+p3
+sS'layer'
+p4
+S'/Users/ggarcia/Documents/foodbank/applications/foodbank/controllers/api_info.py'
+p5
+sS'code'
+p6
+S'__author__ = \'ggarcia\'\n\nimport requests\n\nclass ngclass:\n    def __init__ (self):\n        self.base_url="https://www.neighbourly.com/api"\n        self.project_id = "5734bf1cb9918e1880f27a6e"\n\n    def get_page(self, url):\n        """ Get a page and return a json object asociated"""\n        url = "%s%s" %(self.base_url, url)\n        print url\n        r=requests.get(url)\n        if r.status_code == 200:\n            return r.json()\n        return []\n\n    def get_project_info(self):\n        """ Return a json for the info project """\n        url="/projects/%s" %(self.project_id,)\n        return self.get_page(url)\n\n    def get_all_events(self):\n        """ Get all the events information """\n        url = "/projectEvents/%s/all" %(self.project_id, )\n        return self.get_page(url)\n\n    def get_event_voluteers(self, event_id):\n        """ Get the voluteers associated with an event """\n        url="/projectEventVolunteers/%s/all/bystatus?projectEventId=%s&targetProjectId=&status=1" %(event_id, event_id)\n        return self.get_page(url)\n\n    def get_profile(self, user_id):\n        """ """\n        url="/profiles/%s" %(user_id, )\n        return self.get_page(url)\n\n    def get_event_id(self):\n      ## check if exists\n      data=db(db.voluteers).select()\n      return data\n\n    def get_user_id(self):\n\n      return id\n\ndef api_test():\n  nbg = ngclass()\n  # events = nbg.get_all_events()\n  # for event in events:\n  #   print event[\'name\'], event[\'id\'], event[\'status\'], event[\'endDateTime\']\n  #\n  # for user in nbg.get_event_voluteers("585ea7adc7ac880cdcf3817b"):\n  #   print user\n\n  print nbg.get_event_id()\n\n  return dict()\nresponse._vars=response._caller(api_test)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/Users/ggarcia/Documents/foodbank/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/Users/ggarcia/Documents/foodbank/applications/foodbank/controllers/api_info.py", line 60, in <module>\n  File "/Users/ggarcia/Documents/foodbank/gluon/globals.py", line 417, in <lambda>\n    self._caller = lambda f: f()\n  File "/Users/ggarcia/Documents/foodbank/applications/foodbank/controllers/api_info.py", line 57, in api_test\n    print nbg.get_event_id()\n  File "/Users/ggarcia/Documents/foodbank/applications/foodbank/controllers/api_info.py", line 41, in get_event_id\n    data=db(db.voluteers).select()\n  File "/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/pydal/base.py", line 670, in __getattr__\n    return BasicStorage.__getattribute__(self, key)\nAttributeError: \'DAL\' object has no attribute \'voluteers\'\n'
+p11
+s.

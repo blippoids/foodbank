@@ -122,14 +122,31 @@ db.define_table("unit",
                 format='%(name)s',
                 )
 
+db.define_table("location",
+                Field("town", "string"),
+                Field("city", "string"),
+                Field("countrycode", "string"),
+                Field("country", "string"),
+                Field("longitude", "float"),
+                Field("latitude", "float"),
+                Field("street", "string"),
+                Field("post_code", "string"),
+                Field("post_code_prefix", "string"),
+                format="%(city)s")
 
 db.define_table("volunteer",
-                Field("name", "string"),
+                Field("volunteer_id", "string"),
+                Field("first_name", "string"),
+                Field("last_name", "string"),
                 Field("joined", "date"),
                 Field("address", "string"),
-                format='%(name)s',
+                Field("roles", "string"),
+                Field("thumbnail", "text"),
+                Field("public_location", "reference location"),
+                Field("biography", "text"),
+                Field("thumbnail", "string"),
+                format='%(first_name)s'
                 )
-
 
 db.define_table("retailer",
                 Field("name", "string"),
@@ -137,7 +154,6 @@ db.define_table("retailer",
                 Field("address", "string"),
                 format="%(name)s",
                 )
-
 
 db.define_table("entrance",
                 Field("date", "date"),
@@ -154,4 +170,26 @@ db.define_table("product",
                 Field('from_entrance', 'reference entrance', required=False),
                 format="%(from_category)s-%(from_entrance)s",
                 )
+
+db.define_table("project",
+                Field("project_id", "text"), ## add more
+                format="%(project_id)s"
+                )
+
+db.define_table("event",
+                Field("event_id", "text"),
+                Field("name", "text"),
+                Field("description", "text"),
+                Field("organiser_id", "text"),
+                Field("end_date_time", "text"),
+                Field("status", "integer"),
+                Field("location_id", "reference location"),
+                format="%(name)s"
+                )
+
+db.define_table("event_volunteer",
+                Field("event_id", "reference_event"),
+                Field("volunteer_id", "reference volunteer"),
+                format='%(id)s')
+
 auth.enable_record_versioning(db)
